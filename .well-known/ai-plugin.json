@@ -9,11 +9,11 @@
     },
     "api": {
       "type": "openapi",
-      "url": "http://carpark.sausheong.com/openapi.yaml",
+      "url": "https://carpark.sausheong.com/openapi.yaml",
       "is_user_authenticated": false
     },
-    "logo_url": "http://carpark.sausheong.com/static/logo.png",
+    "logo_url": "https://carpark.sausheong.com/static/logo.png",
     "contact_email": "sausheong@sausheong.com",
-    "legal_info_url": "http://carpark.sausheong.com/static/legal.html"
+    "legal_info_url": "https://carpark.sausheong.com/static/legal.html"
 }
   
