@@ -4,7 +4,7 @@ info:
   description: Plugin for checking avaiability of car park lots at various HDB car parks around Singapore using ChatGPT
   version: 'v1'
 servers:
-  - url: http://localhost:1234
+  - url: https://carpark.sausheong.com
 paths:
   /info?q={location}:
     get:
