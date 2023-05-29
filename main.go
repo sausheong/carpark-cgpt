@@ -8,27 +8,13 @@ import (
 	"net/url"
 	"os"
 	"time"
-
-	"github.com/joho/godotenv"
 )
-
-var env string
 
 const infoUrl = "https://data.gov.sg/api/action/datastore_search?resource_id=139a3035-e624-4f56-b63f-89ae28d4ae4c&q="
 const availUrl = "https://api.data.gov.sg/v1/transport/carpark-availability?date_time="
 
-func init() {
-	env = os.Getenv("ENV")
-	if env != "prod" {
-		err := godotenv.Load()
-		if err != nil {
-			log.Printf("Failed to load the env vars: %v", err)
-		}
-	}
-}
-
 func main() {
-	addr := os.Getenv("PORT")
+	port := os.Getenv("PORT")
 	mux := http.NewServeMux()
 	mux.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
 	mux.Handle("/.well-known/ai-plugin.json", cors(manifest))
@@ -37,7 +23,7 @@ func main() {
 	mux.Handle("/availability", cors(availability))
 
 	server := &http.Server{
-		Addr:    ":" + addr,
+		Addr:    ":" + port,
 		Handler: mux,
 	}
 	server.ListenAndServe()
@@ -46,11 +32,9 @@ func main() {
 // middleware to set CORS for handlers
 func cors(h http.HandlerFunc) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if env != "prod" {
-			w.Header().Set("Access-Control-Allow-Origin", "*")
-			w.Header().Set("Access-Control-Allow-Methods", "GET")
-			w.Header().Set("Access-Control-Allow-Headers", "Origin,Content-Type,OpenAI-Conversation-ID,OpenAI-Ephemeral-User-ID")
-		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET")
+		w.Header().Set("Access-Control-Allow-Headers", "Origin,Content-Type,OpenAI-Conversation-ID,OpenAI-Ephemeral-User-ID")
 		h.ServeHTTP(w, r)
 	})
 }
