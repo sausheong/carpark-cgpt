@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: HDB Car Park Availability.
-  description: For checking avaiability of car park lots at various HDB car parks around Singapore.
+  title: HDB Car Park
+  description: For checking avaiability of car park lots at various HDB car parks around Singapore
   version: 'v1'
 servers:
   - url: https://carpark.sausheong.com
