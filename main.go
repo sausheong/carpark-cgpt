@@ -63,7 +63,9 @@ func info(w http.ResponseWriter, r *http.Request) {
 func availability(w http.ResponseWriter, r *http.Request) {
 	// get the car parks requested
 	query := r.URL.Query().Get("q")
-	records := getCarParkRecords(query[:len(query)-1])
+	log.Println("q:", query)
+	log.Println("query:", query[:len(query)-1])
+	records := getCarParkRecords(query)
 
 	// get the availability of car parks in Singapore now
 	now := time.Now()
