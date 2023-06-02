@@ -24,7 +24,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getCarParkInfo'
-  /availability?q={location}::
+  /availability?q={location}:
     get:
       operationId: getCarParkAvailability
       summary: Get availability of HDB car parks in Singapore at this moment
