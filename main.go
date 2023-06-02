@@ -74,11 +74,13 @@ func availability(w http.ResponseWriter, r *http.Request) {
 	carparkdata := []CarParkData{}
 
 	resp, err := http.Get(availUrl + url.QueryEscape(dt))
+	log.Println("url:", availUrl+url.QueryEscape(dt))
 	if err != nil {
 		log.Println("Cannot call url", availUrl+dt, err)
 	}
 	defer resp.Body.Close()
 	data, err := io.ReadAll(resp.Body)
+	log.Println("data", string(data))
 	if err != nil {
 		log.Println("Cannot read JSON file", err)
 	}
@@ -86,12 +88,13 @@ func availability(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Error unmarshalling json data:", err)
 	}
-
+	log.Println("availability:", availability)
 	// filter off those that we want to look for
 	for _, item := range availability.Items {
 		for _, data := range item.Data {
 			for _, record := range records {
 				if data.CarParkNumber == record.CarParkNo {
+					log.Println("data:", data)
 					carparkdata = append(carparkdata, data)
 				}
 			}
@@ -117,5 +120,6 @@ func getCarParkRecords(query string) []CarParkRecord {
 	if err != nil {
 		log.Println("Error unmarshalling json data:", err)
 	}
+	// log.Println("records:", carparks.Result.Records)
 	return carparks.Result.Records
 }
