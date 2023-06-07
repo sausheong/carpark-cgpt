@@ -86,10 +86,12 @@ func availability(w http.ResponseWriter, r *http.Request) {
 	}
 	// filter off those that we want to look for
 	for _, item := range availability.Items {
+	DATA_LOOP:
 		for _, data := range item.Data {
 			for _, record := range records {
 				if data.CarParkNumber == record.CarParkNo {
 					carparkdata = append(carparkdata, data)
+					continue DATA_LOOP
 				}
 			}
 		}
@@ -101,7 +103,7 @@ func availability(w http.ResponseWriter, r *http.Request) {
 // get card park records based on a query
 func getCarParkRecords(query string) []CarParkRecord {
 	carparks := new(CarParks)
-	resp, err := http.Get(infoUrl + query)
+	resp, err := http.Get(infoUrl + url.QueryEscape(query))
 	if err != nil {
 		log.Println("Cannot call url", infoUrl+query, err)
 	}
